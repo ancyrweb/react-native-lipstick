@@ -1,0 +1,25 @@
+{
+  "name": "react-native-lipstick",
+  "version": "1.0.0",
+  "description": "Add powerful styling to your react-native components, including scaling, global variables, selectors and more !",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "devDependencies": {
+    "babel-jest": "^23.0.1",
+    "babel-preset-react-native": "^4.0.0",
+    "jest": "^23.1.0",
+    "react-native": "^0.55.4"
+  },
+  "peerDependencies": {
+    "react-native": "*"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native)/)"
+    ]
+  }
+}
