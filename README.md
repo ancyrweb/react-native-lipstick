@@ -30,17 +30,21 @@ import StyleSheet from "react-native-lipstick";
 const styles = StyleSheet.create({
   $blue: "#5a99ee",
 
+  // Reuse of the global $blue
   topBar: {
     backgroundColor: "$blue",
     height: "60@vs",
     width: "100%",
   },
 
+  // @vs scales the value vertically given screen height
+  // @s scales horizontally given screen width
   profilePicture: {
     height: "25@vs",
     width: "25@s",
   },
 
+  // apply a borderWidth of 1 to both topBar and profilePicture
   'topBar|profilePicture': {
     borderWidth: 1,
   }
