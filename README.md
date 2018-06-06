@@ -15,7 +15,9 @@ provided by react and allows you to do much more funny things !
 ## Installation
 
 `npm install --save react-native-lipstick`
+
 OR
+
 `yarn add react-native-lipstick`
 
 ## Example
@@ -58,7 +60,7 @@ By default are provided three plugins :
 * **globalVariablePlugin** : allows the usage of global variables
 * **multiSelectorsPlugin** : handle the use of selectors (like 'topBar|profilePicture')
 * **scalePlugin** : scales the values according to the screen dimensions so your app looks the same
-on every screen (inspired by [react-native-size-matters)](https://github.com/nirsky/react-native-size-matters)) 
+on every screen (inspired by [react-native-size-matters)](https://github.com/nirsky/react-native-size-matters)
 
 ## Write your own plugin !
 
@@ -76,8 +78,8 @@ StyleSheet.addPlugin((object) => {
 
 ## Performances ?
 
-I really don't know if it's a threat in terms of performance, because in depth **every plugin 
-loops through every keys of the style object**. I think it's gonna add a few ms to launch time, so it's 
-really not noticeable. 
+I really don't know if it's a threat in terms of performance, because in depth **every plugin
+loops through every keys of the style object**. I think it's gonna add a few ms to launch time, so it's
+really not noticeable.
 
 If you have ideas or anything on this please share :)
