@@ -16,6 +16,10 @@
   "peerDependencies": {
     "react-native": "*"
   },
+  "repository": {
+    "type":"git",
+    "url":"git+https://github.com/rewieer/react-native-lipstick"
+  },
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
