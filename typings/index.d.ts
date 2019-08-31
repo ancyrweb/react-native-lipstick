@@ -22,11 +22,12 @@ declare module 'react-native-lipstick' {
     textAlign?: string;
     flex?: number;
   });
+  type PluginStyles = {
+    $inherits: string | string[]
+  }
 
   type defaultExport = {
-    create: (obj: {
-      [key: string]: CustomImageStyle | CustomViewStyle | CustomTextStyle;
-    }) => any;
+    create: (obj: Record<string, CustomImageStyle | CustomViewStyle | CustomTextStyle | PluginStyles>) => any;
   };
 
   const def: defaultExport;

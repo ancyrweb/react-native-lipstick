@@ -14,8 +14,8 @@ function resolveInherits(name, obj) {
     let nextObj = {};
     for (let key of name) {
       nextObj = {
-        ...nextObj,
         ...resolveInherits(key, obj),
+        ...nextObj,
       }
     }
 
@@ -27,8 +27,8 @@ function resolveInherits(name, obj) {
 
   const { $inherits, ...restVal } = obj[name];
   return {
-    ...restVal,
     ...resolveInherits($inherits, obj),
+    ...restVal,
   }
 }
 
@@ -36,8 +36,8 @@ function inherits(val, key, obj) {
   if (val.$inherits) {
     const { $inherits, ...restVal } = val;
     return {
+      ...resolveInherits($inherits, obj),
       ...restVal,
-      ...resolveInherits($inherits, obj)
     }
   }
 

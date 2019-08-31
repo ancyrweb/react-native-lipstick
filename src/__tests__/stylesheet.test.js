@@ -104,92 +104,184 @@ it('should apply the scalePlugin', () => {
   });
 });
 
-it('should apply the inheritPlugin', () => {
-  const obj = {
-    contentContainer: {
-      width: 100,
-    },
-    container: {
-      $inherits: "contentContainer",
-      height: 100,
-    }
-  };
+describe("inherits", () => {
 
-  expect(CustomStyleSheet.create(obj)).toEqual({
-    contentContainer: {
-      width: 100,
-    },
-    container: {
-      width: 100,
-      height: 100,
-    }
+  it('should apply the inheritPlugin', () => {
+    const obj = {
+      contentContainer: {
+        width: 100,
+      },
+      container: {
+        $inherits: "contentContainer",
+        height: 100,
+      }
+    };
+
+    expect(CustomStyleSheet.create(obj)).toEqual({
+      contentContainer: {
+        width: 100,
+      },
+      container: {
+        width: 100,
+        height: 100,
+      }
+    });
   });
-});
 
-it('should apply the inheritPlugin in a transitive way', () => {
-  const obj = {
-    topContainer: {
-      zIndex: 0,
-    },
-    contentContainer: {
-      $inherits: "topContainer",
-      width: 100,
-    },
-    container: {
-      $inherits: "contentContainer",
-      height: 100,
-    }
-  };
+  it('should override inherited', () => {
+    const obj = {
+      contentContainer: {
+        width: 100,
+      },
+      container: {
+        $inherits: "contentContainer",
+        height: 100,
+        width: 150,
+      }
+    };
 
-  expect(CustomStyleSheet.create(obj)).toEqual({
-    topContainer: {
-      zIndex: 0,
-    },
-    contentContainer: {
-      zIndex: 0,
-      width: 100,
-    },
-    container: {
-      zIndex: 0,
-      width: 100,
-      height: 100,
-    }
+    expect(CustomStyleSheet.create(obj)).toEqual({
+      contentContainer: {
+        width: 100,
+      },
+      container: {
+        width: 150,
+        height: 100,
+      }
+    });
   });
-});
-it('should inherits multiple targets', () => {
-  const obj = {
-    testContainer: {
-      marginLeft: 0,
-    },
-    topContainer: {
-      zIndex: 0,
-    },
-    contentContainer: {
-      $inherits: "testContainer",
-      width: 100,
-    },
-    container: {
-      $inherits: ["contentContainer", "topContainer"],
-      height: 100,
-    }
-  };
 
-  expect(CustomStyleSheet.create(obj)).toEqual({
-    testContainer: {
-      marginLeft: 0,
-    },
-    topContainer: {
-      zIndex: 0,
-    },
-    contentContainer: {
-      marginLeft: 0,
-      width: 100,
-    },
-    container: {
-      zIndex: 0,
-      width: 100,
-      height: 100,
-      marginLeft: 0,
-    }
+  it('should apply the inheritPlugin in a transitive way', () => {
+    const obj = {
+      topContainer: {
+        zIndex: 0,
+      },
+      contentContainer: {
+        $inherits: "topContainer",
+        width: 100,
+      },
+      container: {
+        $inherits: "contentContainer",
+        height: 100,
+      }
+    };
+
+    expect(CustomStyleSheet.create(obj)).toEqual({
+      topContainer: {
+        zIndex: 0,
+      },
+      contentContainer: {
+        zIndex: 0,
+        width: 100,
+      },
+      container: {
+        zIndex: 0,
+        width: 100,
+        height: 100,
+      }
+    });
   });
-});
+  it('should apply the inheritPlugin in a transitive way', () => {
+    const obj = {
+      topContainer: {
+        zIndex: 0,
+      },
+      contentContainer: {
+        $inherits: "topContainer",
+        width: 100,
+      },
+      container: {
+        $inherits: "contentContainer",
+        height: 100,
+      }
+    };
+
+    expect(CustomStyleSheet.create(obj)).toEqual({
+      topContainer: {
+        zIndex: 0,
+      },
+      contentContainer: {
+        zIndex: 0,
+        width: 100,
+      },
+      container: {
+        zIndex: 0,
+        width: 100,
+        height: 100,
+      }
+    });
+  });
+  it('should apply the inheritPlugin in a transitive way and override', () => {
+    const obj = {
+      topContainer: {
+        zIndex: 0,
+        color: "red",
+      },
+      contentContainer: {
+        $inherits: "topContainer",
+        width: 100,
+        color: "blue",
+      },
+      container: {
+        $inherits: "contentContainer",
+        height: 100,
+        zIndex: 100,
+      }
+    };
+
+    expect(CustomStyleSheet.create(obj)).toEqual({
+      topContainer: {
+        zIndex: 0,
+        color: "red",
+      },
+      contentContainer: {
+        zIndex: 0,
+        width: 100,
+        color: "blue",
+      },
+      container: {
+        zIndex: 100,
+        width: 100,
+        height: 100,
+        color: "blue",
+      }
+    });
+  });
+  it('should inherits multiple targets', () => {
+    const obj = {
+      testContainer: {
+        marginLeft: 0,
+      },
+      topContainer: {
+        zIndex: 0,
+      },
+      contentContainer: {
+        $inherits: "testContainer",
+        width: 100,
+      },
+      container: {
+        $inherits: ["contentContainer", "topContainer"],
+        height: 100,
+      }
+    };
+
+    expect(CustomStyleSheet.create(obj)).toEqual({
+      testContainer: {
+        marginLeft: 0,
+      },
+      topContainer: {
+        zIndex: 0,
+      },
+      contentContainer: {
+        marginLeft: 0,
+        width: 100,
+      },
+      container: {
+        zIndex: 0,
+        width: 100,
+        height: 100,
+        marginLeft: 0,
+      }
+    });
+  });
+})
