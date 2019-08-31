@@ -35,10 +35,10 @@ export const verticalScale = size =>
   Math.ceil(height / guidelineBaseHeight * size);
 
 // This regex checks if our current value has a vertical or horizontal scale flag
-const validScaleSheetRegex = /^(\d+(\.\d{1,2})?)@(s|vs)$/;
+const validScaleSheetRegex = /^(\-)?(\d+(\.\d{1,2})?)@(s|vs)$/;
 
-const scaleRegex = /^(\d+(\.\d{1,2})?)@s$/;
-const verticalScaleRegex = /^(\d+(\.\d{1,2})?)@vs$/;
+const scaleRegex = /^(\-)?(\d+(\.\d{1,2})?)@s$/;
+const verticalScaleRegex = /^(\-)?(\d+(\.\d{1,2})?)@vs$/;
 
 /**
  * Scale the value using annotations.
@@ -50,13 +50,16 @@ const scaleByAnnotation = value => {
     return value;
   }
 
-  const size = parseInt(value.split('@')[0], 10);
+  const multiplier = value[0] === "-" ? -1 : 1;
+  const numeralValue = value[0] === "-" ? value.substr(1).split('@')[0] : value.split('@')[0];
+  const size = parseInt(numeralValue, 10);
+
   if (scaleRegex.test(value)) {
-    return scale(size);
+    return multiplier * scale(size);
   }
 
   if (verticalScaleRegex.test(value)) {
-    return verticalScale(size);
+    return multiplier * verticalScale(size);
   }
 
   return value;

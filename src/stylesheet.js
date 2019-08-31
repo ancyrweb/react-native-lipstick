@@ -4,6 +4,7 @@ import { pipe } from './utils';
 import globalVariablesPlugin from './plugins/globalVariablesPlugin';
 import multiSelectorsPlugin from './plugins/multiSelectorsPlugin';
 import scalePlugin from './plugins/scalePlugin';
+import inheritPlugin from './plugins/inheritPlugin';
 
 /**
  * The plugin system is a fairly simple one :
@@ -17,7 +18,8 @@ import scalePlugin from './plugins/scalePlugin';
 let initialParseStyle = pipe(
   multiSelectorsPlugin(),
   globalVariablesPlugin(),
-  scalePlugin()
+  scalePlugin(),
+  inheritPlugin()
 );
 
 let parseStyle = initialParseStyle;

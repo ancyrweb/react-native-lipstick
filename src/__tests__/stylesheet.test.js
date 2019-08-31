@@ -4,7 +4,7 @@ beforeEach(() => {
   CustomStyleSheet.reset();
 });
 
-it('when we pass an object, it returns the same', () => {
+it('should return the original object when no plugin is provided', () => {
   const obj = {
     container: {
       flex: 1
@@ -13,7 +13,7 @@ it('when we pass an object, it returns the same', () => {
 
   expect(CustomStyleSheet.create(obj)).toEqual(obj);
 });
-it('when we add a plugin, it should take it into account', () => {
+it('should take the plugin into account', () => {
   CustomStyleSheet.addPlugin((object) => {
     return {
       container: {
@@ -35,7 +35,7 @@ it('when we add a plugin, it should take it into account', () => {
   });
 });
 
-it('when we define global variables, it replaces the values by their value', () => {
+it('should apply the globalVariable plugin', () => {
   const obj = {
     $redColor: 'red',
     container: {
@@ -49,7 +49,7 @@ it('when we define global variables, it replaces the values by their value', () 
     }
   });
 });
-it('when we define multiple selectors separated by |, it should copy their values', () => {
+it('should apply the multiSelectors plugin', () => {
   const obj = {
     container: {
       borderWidth: 1,
@@ -86,11 +86,12 @@ it('when we define multiple selectors separated by |, it should copy their value
     }
   });
 });
-it('should scale the values', () => {
+it('should apply the scalePlugin', () => {
   const obj = {
     container: {
       height: "100@vs",
       width: "100@s",
+      zIndex: "-100@s",
     }
   };
 
@@ -98,6 +99,97 @@ it('should scale the values', () => {
     container: {
       height: 197,
       width: 215,
+      zIndex: -215,
+    }
+  });
+});
+
+it('should apply the inheritPlugin', () => {
+  const obj = {
+    contentContainer: {
+      width: 100,
+    },
+    container: {
+      $inherits: "contentContainer",
+      height: 100,
+    }
+  };
+
+  expect(CustomStyleSheet.create(obj)).toEqual({
+    contentContainer: {
+      width: 100,
+    },
+    container: {
+      width: 100,
+      height: 100,
+    }
+  });
+});
+
+it('should apply the inheritPlugin in a transitive way', () => {
+  const obj = {
+    topContainer: {
+      zIndex: 0,
+    },
+    contentContainer: {
+      $inherits: "topContainer",
+      width: 100,
+    },
+    container: {
+      $inherits: "contentContainer",
+      height: 100,
+    }
+  };
+
+  expect(CustomStyleSheet.create(obj)).toEqual({
+    topContainer: {
+      zIndex: 0,
+    },
+    contentContainer: {
+      zIndex: 0,
+      width: 100,
+    },
+    container: {
+      zIndex: 0,
+      width: 100,
+      height: 100,
+    }
+  });
+});
+it('should inherits multiple targets', () => {
+  const obj = {
+    testContainer: {
+      marginLeft: 0,
+    },
+    topContainer: {
+      zIndex: 0,
+    },
+    contentContainer: {
+      $inherits: "testContainer",
+      width: 100,
+    },
+    container: {
+      $inherits: ["contentContainer", "topContainer"],
+      height: 100,
+    }
+  };
+
+  expect(CustomStyleSheet.create(obj)).toEqual({
+    testContainer: {
+      marginLeft: 0,
+    },
+    topContainer: {
+      zIndex: 0,
+    },
+    contentContainer: {
+      marginLeft: 0,
+      width: 100,
+    },
+    container: {
+      zIndex: 0,
+      width: 100,
+      height: 100,
+      marginLeft: 0,
     }
   });
 });
